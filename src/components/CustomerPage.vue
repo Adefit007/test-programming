@@ -19,35 +19,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>@fat</td>
-          <td>@fat</td>
-          <td>@fat</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td >Larry the Bird</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
+        <tr v-for="item in customer" :key="item">
+          <th scope="row">{{ item.id }}</th>
+          <td>{{  item.nama}}</td>
+          <td>{{  item.contact}}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.alamat }}</td>
+          <td>{{ item.discount }}</td>
+          <td>{{ item.tipeDiscount }}</td>
+          <td>{{ item.ktp }}</td>
         </tr>
       </tbody>
     </table>
@@ -57,7 +37,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-    name:'HomeCustomer'
+    name:'HomeCustomer',
+    data(){
+      return{
+        customer: {}
+      }
+    },
+    async mounted() {
+      let result = await axios.get('http://localhost:5000/api/v1/customers').then(response => (this.customer = response.data.customer))
+      console.log(result);
+}
 };
+
 </script>
